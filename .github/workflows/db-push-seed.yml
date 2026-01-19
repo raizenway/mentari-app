@@ -1,0 +1,51 @@
+name: Push Prisma Schema & Seed DB
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  push-and-seed:
+    name: Push schema and seed database
+    runs-on: ubuntu-latest
+    env:
+      # DATABASE_URL must be added as a GitHub Secret in the repository
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      # Optional: add SUPABASE_SERVICE_ROLE_KEY as secret if your seed script uses it
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate Prisma Client
+        run: npm run db:generate
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+      - name: Push Prisma schema to database
+        run: npm run db:push
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+      - name: Run seed script
+        run: npm run db:seed
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+
+      - name: Verify seed (count users)
+        run: |
+          node -e "const {PrismaClient}=require('@prisma/client'); (async()=>{const p=new PrismaClient(); try{const c=await p.user.count(); console.log('Users count:', c);}catch(e){console.error(e); process.exit(1);}finally{await p.$disconnect();}})()"
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+      - name: Done
+        run: echo "Prisma db push and seed completed successfully"
