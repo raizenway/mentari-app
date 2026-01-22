@@ -65,7 +65,7 @@ export default function LoginForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-      <div className="space-y-2">
+      <div className="space-y-2 text-black">
         <Label htmlFor="email">Email</Label>
         <Input
           id="email"
@@ -80,7 +80,7 @@ export default function LoginForm() {
         )}
       </div>
 
-      <div className="space-y-2">
+      <div className="space-y-2 text-black">
         <Label htmlFor="password">Password</Label>
         <div className="relative">
           <Input
@@ -110,7 +110,7 @@ export default function LoginForm() {
 
       <Button
         type="submit"
-        className="w-full h-11 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600"
+        className="w-full h-11 font-bold text-black bg-gradient-to-r from-amber-400 to-yellow-400 hover:from-amber-500 hover:to-yellow-500"
         disabled={isLoading}
       >
         {isLoading ? (

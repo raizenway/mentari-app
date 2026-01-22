@@ -84,7 +84,7 @@ export default function UsersTable({ users }: UsersTableProps) {
 
   return (
     <>
-      <div className="rounded-lg border bg-white">
+      <div className="rounded-lg border bg-white ">
         <Table>
           <TableHeader>
             <TableRow>
@@ -100,7 +100,7 @@ export default function UsersTable({ users }: UsersTableProps) {
             {users.map((user) => (
               <TableRow key={user.id}>
                 <TableCell>
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 text-black">
                     <Avatar className="h-8 w-8">
                       <AvatarImage src={user.profileImage || undefined} />
                       <AvatarFallback className="bg-amber-100 text-amber-700">
@@ -125,7 +125,7 @@ export default function UsersTable({ users }: UsersTableProps) {
                   {user.isActive ? (
                     <Badge variant="success">Aktif</Badge>
                   ) : (
-                    <Badge variant="secondary">Nonaktif</Badge>
+                    <Badge variant="danger">Nonaktif</Badge>
                   )}
                 </TableCell>
                 <TableCell className="text-gray-500">
@@ -135,11 +135,11 @@ export default function UsersTable({ users }: UsersTableProps) {
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button variant="ghost" size="icon">
-                        <MoreHorizontal className="h-4 w-4" />
+                        <MoreHorizontal className="h-4 w-4 text-black" />
                       </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuItem onClick={() => setEditUser(user)}>
+                    <DropdownMenuContent align="end" className="bg-white">
+                      <DropdownMenuItem onClick={() => setEditUser(user)} className="text-black">
                         <Pencil className="mr-2 h-4 w-4" />
                         Edit Profil
                       </DropdownMenuItem>
@@ -149,13 +149,13 @@ export default function UsersTable({ users }: UsersTableProps) {
                       >
                         {user.isActive ? (
                           <>
-                            <UserX className="mr-2 h-4 w-4" />
-                            Nonaktifkan
+                            <UserX className="mr-2 h-4 w-4 text-red-500" />
+                            <p className="text-red-500">Nonaktifkan</p>
                           </>
                         ) : (
                           <>
-                            <UserCheck className="mr-2 h-4 w-4" />
-                            Aktifkan
+                            <UserCheck className="mr-2 h-4 w-4 text-green-500" />
+                            <p className="text-green-500">Aktifkan</p>
                           </>
                         )}
                       </DropdownMenuItem>

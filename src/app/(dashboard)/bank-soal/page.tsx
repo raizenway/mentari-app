@@ -32,7 +32,7 @@ export default async function BankSoalPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Bank Soal</h1>
+          <h1 className="text-2xl font-bold text-hitam">Bank Soal</h1>
           <p className="text-gray-600">
             {canManage
               ? "Kelola dan upload file bank soal"

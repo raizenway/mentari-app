@@ -83,12 +83,12 @@ export default function AddUserDialog() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="bg-amber-500 hover:bg-amber-600">
+        <Button className="bg-amber-300 hover:bg-yellow-500 text-black">
           <Plus className="mr-2 h-4 w-4" />
           Tambah Pengguna
         </Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="bg-white text-black">
         <DialogHeader>
           <DialogTitle>Tambah Pengguna Baru</DialogTitle>
         </DialogHeader>
@@ -155,10 +155,10 @@ export default function AddUserDialog() {
               <SelectTrigger>
                 <SelectValue placeholder="Pilih role" />
               </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="SISWA">Siswa</SelectItem>
-                <SelectItem value="PENGAJAR">Pengajar</SelectItem>
-                <SelectItem value="ADMIN">Admin</SelectItem>
+              <SelectContent className="bg-white text-black">
+                <SelectItem value="SISWA" className="hover:bg-gray-200">Siswa</SelectItem>
+                <SelectItem value="PENGAJAR" className="hover:bg-gray-200">Pengajar</SelectItem>
+                <SelectItem value="ADMIN" className="hover:bg-gray-200">Admin</SelectItem>
               </SelectContent>
             </Select>
             {errors.role && (
@@ -177,7 +177,7 @@ export default function AddUserDialog() {
             </Button>
             <Button
               type="submit"
-              className="bg-amber-500 hover:bg-amber-600"
+              className="bg-amber-300 hover:bg-yellow-500"
               disabled={isLoading}
             >
               {isLoading ? (

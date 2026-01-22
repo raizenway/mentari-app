@@ -154,7 +154,7 @@ export function ClassSessionList({
             </div>
 
             <div className="flex gap-2 pt-2">
-              <Button variant="outline" size="sm" className="flex-1" asChild>
+              <Button variant="outline" size="sm" className="flex-1 text-hitam" asChild>
                 <Link href={`/sesi-kelas/${classSession.id}`}>
                   <Eye className="mr-1 h-3 w-3" />
                   Detail
@@ -163,7 +163,7 @@ export function ClassSessionList({
               {classSession.zoomLink && (
                 <Button
                   size="sm"
-                  className="flex-1"
+                  className="flex-1 text-white bg-biru"
                   onClick={() => window.open(classSession.zoomLink!, "_blank")}
                 >
                   <ExternalLink className="mr-1 h-3 w-3" />

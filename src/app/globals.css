@@ -2,7 +2,10 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: var(--hitam);
+  --biru: #489ddd;
+  --kuning: #f7cc0e;
+  --hitam: #393939;
 }
 
 @theme inline {
@@ -12,6 +15,21 @@
   --font-mono: var(--font-geist-mono);
 }
 
+/* Ensure base text elements default to the brand foreground color */
+/* @layer base {
+  html, body, h1, h2, h3, h4, h5, h6, p, span, li, a, button, input, textarea {
+    color: var(--foreground);
+  }
+
+  .text-2xl, .text-xl, .text-lg, .font-medium, .font-semibold, .font-bold {
+    color: #393939 !important;
+  }
+
+  label, .label, .form-label {
+    color: var(--foreground) !important;
+  }
+} */
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
@@ -19,8 +37,35 @@
   }
 }
 
+/* Custom brand colors available as Tailwind classes (text-biru, bg-kuning, etc.)
+   and as CSS variables for direct usage */
+:root {
+  --biru: #489ddd;
+  --kuning: #f7cc0e;
+  --hitam: #393939;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Fallback utility classes to ensure brand colors are available */
+@layer utilities {
+  .text-biru { color: var(--biru) !important; }
+  .text-kuning { color: var(--kuning) !important; }
+  .text-hitam { color: var(--hitam) !important; }
+
+  .bg-biru { background-color: var(--biru) !important; }
+  .bg-kuning { background-color: var(--kuning) !important; }
+  .bg-hitam { background-color: var(--hitam) !important; }
+
+  .border-biru { border-color: var(--biru) !important; }
+  .border-kuning { border-color: var(--kuning) !important; }
+  .border-hitam { border-color: var(--hitam) !important; }
+
+  /* Override shadcn "muted" token so muted text uses brand dark color */
+  .text-muted-foreground { color: rgba(57,57,57,0.8) !important; }
+  .placeholder\:text-muted-foreground::placeholder { color: rgba(57,57,57,0.6) !important; }
 }

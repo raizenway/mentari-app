@@ -71,7 +71,7 @@ export default async function DashboardPage() {
             <FileText className="h-4 w-4 text-amber-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{bankSoalCount}</div>
+            <div className="text-2xl font-bold text-hitam">{bankSoalCount}</div>
             <p className="text-xs text-gray-500 mt-1">Total file tersedia</p>
           </CardContent>
         </Card>
@@ -84,7 +84,7 @@ export default async function DashboardPage() {
             <Calendar className="h-4 w-4 text-green-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{upcomingSessionsCount}</div>
+            <div className="text-2xl font-bold text-hitam">{upcomingSessionsCount}</div>
             <p className="text-xs text-gray-500 mt-1">Kelas terjadwal</p>
           </CardContent>
         </Card>
@@ -113,7 +113,7 @@ export default async function DashboardPage() {
               <CheckCircle className="h-4 w-4 text-emerald-500" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{totalAttendance}</div>
+              <div className="text-2xl font-bold text-hitam">{totalAttendance}</div>
               <p className="text-xs text-gray-500 mt-1">Kelas dihadiri</p>
             </CardContent>
           </Card>
@@ -188,7 +188,7 @@ export default async function DashboardPage() {
             <Link href="/bank-soal">
               <div className="p-4 rounded-lg border hover:border-amber-500 hover:bg-amber-50 transition-all cursor-pointer">
                 <FileText className="h-8 w-8 text-amber-500 mb-2" />
-                <h3 className="font-medium">Akses Bank Soal</h3>
+                <h3 className="font-medium text-hitam">Akses Bank Soal</h3>
                 <p className="text-sm text-gray-500">
                   Lihat dan download materi pembelajaran
                 </p>
@@ -198,7 +198,7 @@ export default async function DashboardPage() {
             <Link href="/sesi-kelas">
               <div className="p-4 rounded-lg border hover:border-green-500 hover:bg-green-50 transition-all cursor-pointer">
                 <Video className="h-8 w-8 text-green-500 mb-2" />
-                <h3 className="font-medium">Sesi Kelas</h3>
+                <h3 className="font-medium text-hitam">Sesi Kelas</h3>
                 <p className="text-sm text-gray-500">
                   {user.role === "SISWA"
                     ? "Gabung kelas online"

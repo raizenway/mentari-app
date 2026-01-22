@@ -95,7 +95,7 @@ export default function ProfilePage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold">Profil Saya</h1>
+        <h1 className="text-2xl font-bold text-hitam">Profil Saya</h1>
         <p className="text-muted-foreground">
           Kelola informasi profil dan keamanan akun Anda
         </p>
@@ -116,7 +116,7 @@ export default function ProfilePage() {
                 </AvatarFallback>
               </Avatar>
               <div>
-                <h3 className="text-xl font-semibold">{session?.user?.name}</h3>
+                <h3 className="text-xl font-semibold text-hitam">{session?.user?.name}</h3>
                 {session?.user?.role && getRoleBadge(session.user.role)}
               </div>
             </div>
@@ -126,7 +126,7 @@ export default function ProfilePage() {
                 <User className="h-5 w-5 text-muted-foreground" />
                 <div>
                   <p className="text-sm text-muted-foreground">Nama</p>
-                  <p className="font-medium">{session?.user?.name}</p>
+                  <p className="font-medium text-hitam">{session?.user?.name}</p>
                 </div>
               </div>
 
@@ -134,7 +134,7 @@ export default function ProfilePage() {
                 <Mail className="h-5 w-5 text-muted-foreground" />
                 <div>
                   <p className="text-sm text-muted-foreground">Email</p>
-                  <p className="font-medium">{session?.user?.email}</p>
+                  <p className="font-medium text-hitam">{session?.user?.email}</p>
                 </div>
               </div>
 
@@ -142,7 +142,7 @@ export default function ProfilePage() {
                 <Shield className="h-5 w-5 text-muted-foreground" />
                 <div>
                   <p className="text-sm text-muted-foreground">Role</p>
-                  <p className="font-medium capitalize">
+                  <p className="font-medium capitalize text-hitam">
                     {session?.user?.role?.toLowerCase() || "-"}
                   </p>
                 </div>
@@ -173,7 +173,7 @@ export default function ProfilePage() {
                 </div>
               )}
 
-              <div className="space-y-2">
+              <div className="space-y-2 text-hitam">
                 <Label htmlFor="currentPassword">Password Lama</Label>
                 <Input
                   id="currentPassword"
@@ -188,7 +188,7 @@ export default function ProfilePage() {
                 )}
               </div>
 
-              <div className="space-y-2">
+              <div className="space-y-2 text-hitam">
                 <Label htmlFor="newPassword">Password Baru</Label>
                 <Input
                   id="newPassword"
@@ -201,12 +201,12 @@ export default function ProfilePage() {
                     {errors.newPassword.message}
                   </p>
                 )}
-                <p className="text-xs text-muted-foreground">
+                <p className="text-xs text-muted-foreground text-hitam">
                   Minimal 8 karakter dengan huruf kapital, huruf kecil, dan angka
                 </p>
               </div>
 
-              <div className="space-y-2">
+              <div className="space-y-2 text-hitam">
                 <Label htmlFor="confirmPassword">Konfirmasi Password Baru</Label>
                 <Input
                   id="confirmPassword"
@@ -221,7 +221,7 @@ export default function ProfilePage() {
                 )}
               </div>
 
-              <Button type="submit" className="w-full" disabled={isSubmitting}>
+              <Button type="submit" className="w-full bg-biru" disabled={isSubmitting}>
                 {isSubmitting ? "Menyimpan..." : "Simpan Password"}
               </Button>
             </form>

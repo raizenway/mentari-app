@@ -56,7 +56,7 @@ export default async function UsersPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{stats.total}</div>
+            <div className="text-2xl font-bold text-black">{stats.total}</div>
           </CardContent>
         </Card>
         <Card>

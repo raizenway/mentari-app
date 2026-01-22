@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
 import LoginForm from "./login-form";
+import Image from "next/image";
 
 export default async function LoginPage() {
   const session = await auth();
@@ -10,18 +11,12 @@ export default async function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-200 to-yellow-100 p-4">
       <div className="w-full max-w-md">
         {/* Logo dan Judul */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 mb-4 shadow-lg">
-            <svg
-              className="w-12 h-12 text-white"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-            </svg>
+            <Image src="/logo-mentari.png" alt="Mentari" width={200} height={200} className="object-cover" />
           </div>
           <h1 className="text-3xl font-bold text-gray-900">MENTARI</h1>
           <p className="text-gray-600 mt-1">Mentor Anak Negeri</p>

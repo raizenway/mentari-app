@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
@@ -72,11 +73,11 @@ export default function Sidebar({ user }: SidebarProps) {
     <>
       {/* Mobile sidebar backdrop */}
       <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-64 lg:flex-col">
-        <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gradient-to-b from-amber-500 to-orange-500 px-6 pb-4">
+        <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-[#489ddd] px-6 pb-4">
           {/* Logo */}
           <div className="flex h-16 shrink-0 items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20">
-              <Sun className="h-6 w-6 text-white" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20 overflow-hidden">
+              <Image src="/logo-mentari.png" alt="Mentari" width={40} height={40} className="object-cover" />
             </div>
             <div>
               <span className="text-xl font-bold text-white">MENTARI</span>
@@ -98,7 +99,7 @@ export default function Sidebar({ user }: SidebarProps) {
                       className={cn(
                         "group flex gap-x-3 rounded-lg p-3 text-sm font-medium leading-6 transition-all",
                         isActive
-                          ? "bg-white/20 text-white"
+                          ? "bg-yellow-300 text-blue-950"
                           : "text-white/80 hover:bg-white/10 hover:text-white"
                       )}
                     >

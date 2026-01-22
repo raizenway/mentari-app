@@ -118,16 +118,16 @@ export default function Header({ user }: HeaderProps) {
                       {user.name.charAt(0).toUpperCase()}
                     </AvatarFallback>
                   </Avatar>
-                  <span className="hidden lg:block text-sm font-medium">
+                  <span className="hidden lg:block text-sm text-hitam font-medium">
                     {user.name}
                   </span>
                   <ChevronDown className="h-4 w-4 text-gray-500" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56">
+              <DropdownMenuContent align="end" className="w-56 bg-white">
                 <DropdownMenuLabel>
                   <div className="flex flex-col space-y-1">
-                    <p className="text-sm font-medium">{user.name}</p>
+                    <p className="text-sm font-medium text-hitam">{user.name}</p>
                     <p className="text-xs text-gray-500">{user.email}</p>
                     <p className="text-xs text-amber-600 capitalize">
                       {user.role.toLowerCase()}
@@ -136,8 +136,8 @@ export default function Header({ user }: HeaderProps) {
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
-                  <Link href="/profil" className="cursor-pointer">
-                    <User className="mr-2 h-4 w-4" />
+                  <Link href="/profil" className="cursor-pointer text-hitam">
+                    <User className="mr-2 h-4 w-4 text-hitam" />
                     Profil Saya
                   </Link>
                 </DropdownMenuItem>

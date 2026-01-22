@@ -99,7 +99,7 @@ export default function PresensiPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold">Presensi Saya</h1>
+        <h1 className="text-2xl font-bold text-hitam">Presensi Saya</h1>
         <p className="text-muted-foreground">
           Riwayat kehadiran Anda di sesi kelas
         </p>
@@ -114,7 +114,7 @@ export default function PresensiPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-3xl font-bold">{totalSessions}</p>
+            <p className="text-3xl font-bold text-hitam">{totalSessions}</p>
           </CardContent>
         </Card>
 
@@ -175,20 +175,20 @@ export default function PresensiPage() {
                     <TableRow key={classSession.id}>
                       <TableCell>
                         <div>
-                          <p className="font-medium">{classSession.title}</p>
+                          <p className="font-medium text-hitam">{classSession.title}</p>
                           <p className="text-sm text-muted-foreground">
                             oleh {classSession.createdBy.name}
                           </p>
                         </div>
                       </TableCell>
                       <TableCell>
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 text-hitam">
                           <Calendar className="h-4 w-4 text-muted-foreground" />
                           {formatDate(classSession.scheduledAt)}
                         </div>
                       </TableCell>
                       <TableCell>
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 text-hitam">
                           <Clock className="h-4 w-4 text-muted-foreground" />
                           {new Date(classSession.scheduledAt).toLocaleTimeString("id-ID", {
                             hour: "2-digit",
@@ -208,7 +208,7 @@ export default function PresensiPage() {
                             Tidak Hadir
                           </Badge>
                         ) : (
-                          <Badge variant="outline">Belum</Badge>
+                          <Badge variant="outline" className="text-hitam">Belum</Badge>
                         )}
                       </TableCell>
                       <TableCell>

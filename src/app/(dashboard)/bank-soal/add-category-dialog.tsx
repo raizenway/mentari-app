@@ -76,12 +76,12 @@ export default function AddCategoryDialog() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">
+        <Button variant="outline" className="text-black bg-white hover:bg-gray-100">
           <Plus className="mr-2 h-4 w-4" />
           Kategori Baru
         </Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="bg-white text-black">
         <DialogHeader>
           <DialogTitle>Tambah Kategori Baru</DialogTitle>
         </DialogHeader>

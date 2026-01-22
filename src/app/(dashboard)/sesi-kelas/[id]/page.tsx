@@ -12,7 +12,8 @@ import {
   Users,
   CheckCircle,
   Copy,
-  Check
+  Check,
+  Info
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -125,26 +126,29 @@ export default function SessionDetailPage({
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 text-black">
       <div className="flex items-center gap-4">
-        <Button variant="ghost" size="icon" asChild>
+        <Button variant="ghost" size="icon" className="bg-biru" asChild>
           <Link href="/sesi-kelas">
-            <ArrowLeft className="h-5 w-5" />
+            <ArrowLeft className="h-5 w-5 text-white" />
           </Link>
         </Button>
         <div>
           <h1 className="text-2xl font-bold">{classSession.title}</h1>
-          <p className="text-muted-foreground">
-            oleh {classSession.createdBy.name}
-          </p>
+            <p className="inline-flex text-black bg-kuning px-2 rounded-lg mt-1">
+              oleh {classSession.createdBy.name}
+            </p>
         </div>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className="grid gap-6 md:grid-cols-2 text-black">
         {/* Session Info */}
         <Card>
-          <CardHeader>
-            <CardTitle className="text-lg">Informasi Sesi</CardTitle>
+          <CardHeader className="inline-flex">
+            <CardTitle className="flex gap-2 items-center text-lg">
+              <Info className="h-5 w-5" />
+              Informasi Sesi
+            </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             {classSession.description && (
@@ -194,7 +198,7 @@ export default function SessionDetailPage({
         {/* Zoom Info */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg flex items-center gap-2">
+            <CardTitle className="flex gap-2 items-center text-lg">
               <Video className="h-5 w-5" />
               Zoom Meeting
             </CardTitle>
@@ -202,14 +206,6 @@ export default function SessionDetailPage({
           <CardContent className="space-y-4">
             {classSession.zoomLink ? (
               <>
-                <Button 
-                  className="w-full" 
-                  onClick={() => window.open(classSession.zoomLink!, "_blank")}
-                >
-                  <ExternalLink className="mr-2 h-4 w-4" />
-                  Join Meeting
-                </Button>
-
                 {classSession.zoomMeetingId && (
                   <div className="flex items-center justify-between p-3 bg-muted rounded-lg">
                     <div>
@@ -249,6 +245,13 @@ export default function SessionDetailPage({
                     </Button>
                   </div>
                 )}
+                <Button 
+                  className="w-full bg-kuning" 
+                  onClick={() => window.open(classSession.zoomLink!, "_blank")}
+                >
+                  <ExternalLink className="mr-2 h-4 w-4" />
+                  Join Meeting
+                </Button>
               </>
             ) : (
               <p className="text-muted-foreground text-center py-4">

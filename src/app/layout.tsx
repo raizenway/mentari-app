@@ -18,17 +18,30 @@ export const metadata: Metadata = {
   description: "Platform bimbingan belajar untuk membantu siswa dan pengajar dalam mengelola bank soal dan kelas",
 };
 
-export default function RootLayout({
+import Providers from "./providers";
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Fetch server session and pass it down to the client SessionProvider
+  let session = null;
+  try {
+    // `auth` returns the current session on the server
+    const { auth } = await import("@/lib/auth");
+    session = await auth();
+  } catch (err) {
+    // ignore and let client revalidate
+    console.error("Error loading session on server:", err);
+  }
+
   return (
     <html lang="id">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <Providers session={session}>{children}</Providers>
         <Toaster />
       </body>
     </html>
