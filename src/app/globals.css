@@ -5,7 +5,7 @@
   --foreground: var(--hitam);
   --biru: #489ddd;
   --kuning: #f7cc0e;
-  --hitam: #393939;
+  --hitam: #000000;
 }
 
 @theme inline {
@@ -42,7 +42,7 @@
 :root {
   --biru: #489ddd;
   --kuning: #f7cc0e;
-  --hitam: #393939;
+  --hitam: #000000;
 }
 
 body {
@@ -66,6 +66,37 @@ body {
   .border-hitam { border-color: var(--hitam) !important; }
 
   /* Override shadcn "muted" token so muted text uses brand dark color */
-  .text-muted-foreground { color: rgba(57,57,57,0.8) !important; }
-  .placeholder\:text-muted-foreground::placeholder { color: rgba(57,57,57,0.6) !important; }
+  .text-muted-foreground { color: rgba(0,0,0,0.7) !important; }
+  .placeholder\:text-muted-foreground::placeholder { color: rgba(0,0,0,0.5) !important; }
 }
+
+/* Ensure Cloudinary Upload Widget is on top and clickable (fixes z-index/pointer-events issues) */
+/* Targets commonly used classes and modal containers inserted by the Cloudinary widget */
+.cld-widget, .cld-upload-widget, .cloudinary, .cloudinary-widget, .cloudinary-modal, .cld-cloudinary, .cld-ui, .cld-upload-dialog, .cloudinary-modal * {
+  z-index: 99999 !important;
+  pointer-events: auto !important;
+}
+
+/* More specific rules to catch Cloudinary's popup structure and dynamic class names */
+/* Ensures widget escapes any parent stacking/clipping and is fixed to viewport */
+.popup-box, .sc-eLtQCx, .ePscxz, .CloseButton, .sc-ZbTNT, .sc-gsFSXq {
+  position: fixed !important;
+  z-index: 999999 !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  pointer-events: auto !important;
+}
+
+/* Ensure overlay/backdrop of the app doesn't block the widget if positioned above it */
+[data-radix-dialog-overlay] {
+  z-index: 60; /* keep dialog overlay under Cloudinary widget */
+}
+
+/* If dialog content creates a stacking context via transform/opacity, lower it */
+[data-state="open"] {
+  transform: none !important;
+}
+
+

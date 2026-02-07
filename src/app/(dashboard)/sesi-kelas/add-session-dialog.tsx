@@ -19,12 +19,18 @@ interface AddSessionDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onSuccess: () => void;
+  mode?: "create" | "edit";
+  initialValues?: ClassSessionFormData | null;
+  sessionId?: string;
 }
 
 export function AddSessionDialog({
   open,
   onOpenChange,
   onSuccess,
+  mode = "create",
+  initialValues = null,
+  sessionId,
 }: AddSessionDialogProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
@@ -38,27 +44,60 @@ export function AddSessionDialog({
     resolver: zodResolver(classSessionSchema),
   });
 
+  const formatToDatetimeLocal = (dateStr: string) => {
+    if (!dateStr) return "";
+    const d = new Date(dateStr);
+    const pad = (n: number) => String(n).padStart(2, "0");
+    const year = d.getFullYear();
+    const month = pad(d.getMonth() + 1);
+    const day = pad(d.getDate());
+    const hours = pad(d.getHours());
+    const minutes = pad(d.getMinutes());
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+  };
+
   useEffect(() => {
     if (!open) {
       reset();
       setError("");
+      return;
     }
-  }, [open, reset]);
+
+    if (initialValues) {
+      reset({
+        ...initialValues,
+        scheduledAt: formatToDatetimeLocal(initialValues.scheduledAt),
+        zoomLink: initialValues.zoomLink ?? "",
+        zoomMeetingId: initialValues.zoomMeetingId ?? "",
+        zoomPasscode: initialValues.zoomPasscode ?? "",
+        description: initialValues.description ?? "",
+      });
+    }
+  }, [open, reset, initialValues]);
 
   const onSubmit = async (data: ClassSessionFormData) => {
     setIsSubmitting(true);
     setError("");
 
     try {
-      const res = await fetch("/api/class-sessions", {
-        method: "POST",
+      const url =
+        mode === "edit" && sessionId
+          ? `/api/class-sessions/${sessionId}`
+          : "/api/class-sessions";
+      const method = mode === "edit" && sessionId ? "PUT" : "POST";
+
+      const res = await fetch(url, {
+        method,
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          ...data,
+          scheduledAt: new Date(data.scheduledAt).toISOString(),
+        }),
       });
 
       if (!res.ok) {
         const result = await res.json();
-        throw new Error(result.error || "Gagal menambahkan sesi");
+        throw new Error(result.error || "Gagal menyimpan sesi");
       }
 
       onSuccess();
@@ -71,9 +110,9 @@ export function AddSessionDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-md">
+      <DialogContent className="max-w-md bg-white text-black">
         <DialogHeader>
-          <DialogTitle>Tambah Sesi Kelas</DialogTitle>
+          <DialogTitle>{mode === "edit" ? "Edit Sesi Kelas" : "Tambah Sesi Kelas"}</DialogTitle>
         </DialogHeader>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -166,7 +205,7 @@ export function AddSessionDialog({
               Batal
             </Button>
             <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? "Menyimpan..." : "Simpan"}
+              {isSubmitting ? (mode === "edit" ? "Menyimpan..." : "Menyimpan...") : (mode === "edit" ? "Perbarui" : "Simpan")}
             </Button>
           </div>
         </form>

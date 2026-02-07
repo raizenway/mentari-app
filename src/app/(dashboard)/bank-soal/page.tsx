@@ -4,13 +4,20 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import BankSoalList from "./bank-soal-list";
 import CategoryList from "./category-list";
-import AddBankSoalDialog from "./add-bank-soal-dialog";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
 import AddCategoryDialog from "./add-category-dialog";
 
-export default async function BankSoalPage() {
+export default async function BankSoalPage({ searchParams }: { searchParams?: Promise<{ categoryId?: string; tab?: string }> }) {
   const session = await auth();
   const user = session!.user;
   const canManage = user.role === "PENGAJAR" || user.role === "ADMIN";
+  
+  // Await searchParams in Next.js 15
+  const params = await searchParams;
+  const selectedCategoryId = params?.categoryId ?? null;
+  const selectedTab = params?.tab ?? null;
 
   const [categories, bankSoals] = await Promise.all([
     prisma.bankSoalCategory.findMany({
@@ -42,22 +49,29 @@ export default async function BankSoalPage() {
         {canManage && (
           <div className="flex gap-2">
             <AddCategoryDialog />
-            <AddBankSoalDialog categories={categories} />
+            <Link href="/bank-soal/add" className=""> 
+              <Button className="bg-amber-500 hover:bg-amber-600">
+                <Plus className="mr-2 h-4 w-4" />
+                Upload Bank Soal
+              </Button>
+            </Link>
           </div>
         )}
       </div>
 
-      <Tabs defaultValue="files" className="w-full">
+      <Tabs defaultValue={selectedTab ?? "files"} className="w-full">
         <TabsList>
           <TabsTrigger value="files">Semua File</TabsTrigger>
-          <TabsTrigger value="categories">Kategori</TabsTrigger>
+          {/* <TabsTrigger value="categories">Kategori</TabsTrigger> */}
         </TabsList>
 
         <TabsContent value="files" className="mt-6">
           <BankSoalList
             bankSoals={bankSoals}
+            categories={categories}
             canManage={canManage}
             canDownload={user.role === "ADMIN"}
+            initialCategory={selectedCategoryId}
           />
         </TabsContent>
 

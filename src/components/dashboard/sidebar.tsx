@@ -11,6 +11,7 @@ import {
   User,
   Sun,
   ClipboardCheck,
+  Calendar,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { UserRole } from "@prisma/client";
@@ -40,6 +41,12 @@ const navigation = [
     name: "Sesi Kelas",
     href: "/sesi-kelas",
     icon: Video,
+    roles: ["SISWA", "PENGAJAR", "ADMIN"],
+  },
+  {
+    name: "Pengumuman",
+    href: "/pengumuman",
+    icon: Calendar,
     roles: ["SISWA", "PENGAJAR", "ADMIN"],
   },
   {

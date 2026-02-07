@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { formatDate } from "@/lib/utils";
+import { ScheduleAnnouncement } from "./schedule-announcement";
 
 export default async function DashboardPage() {
   const session = await auth();
@@ -18,10 +19,10 @@ export default async function DashboardPage() {
   tomorrow.setDate(tomorrow.getDate() + 1);
 
   // Fetch data berdasarkan role
-  const [bankSoalCount, upcomingSessionsCount, totalUsers, upcomingSessions] = await Promise.all([
+  const [bankSoalCount, upcomingSessionsCount, totalUsers, upcomingSessions, schedules] = await Promise.all([
     prisma.bankSoal.count(),
-    prisma.classSession.count({ 
-      where: { scheduledAt: { gte: today } } 
+    prisma.classSession.count({
+      where: { scheduledAt: { gte: today } }
     }),
     user.role === "ADMIN" ? prisma.user.count() : Promise.resolve(0),
     prisma.classSession.findMany({
@@ -30,6 +31,11 @@ export default async function DashboardPage() {
         createdBy: { select: { name: true } },
         _count: { select: { attendances: true } },
       },
+      orderBy: { scheduledAt: "asc" },
+      take: 5,
+    }),
+    prisma.schedule.findMany({
+      where: { scheduledAt: { gte: today } },
       orderBy: { scheduledAt: "asc" },
       take: 5,
     }),
@@ -119,6 +125,9 @@ export default async function DashboardPage() {
           </Card>
         )}
       </div>
+
+      {/* Schedule Announcements */}
+      <ScheduleAnnouncement schedules={schedules} />
 
       {/* Upcoming Sessions */}
       {upcomingSessions.length > 0 && (
@@ -211,7 +220,7 @@ export default async function DashboardPage() {
               <Link href="/users">
                 <div className="p-4 rounded-lg border hover:border-blue-500 hover:bg-blue-50 transition-all cursor-pointer">
                   <Users className="h-8 w-8 text-blue-500 mb-2" />
-                  <h3 className="font-medium">Kelola Pengguna</h3>
+                  <h3 className="font-medium text-black">Kelola Pengguna</h3>
                   <p className="text-sm text-gray-500">
                     Tambah dan kelola akun pengguna
                   </p>

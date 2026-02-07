@@ -31,6 +31,7 @@ model User {
   name          String
   phone         String?
   profileImage  String?
+  asalSekolah   String?
   role          UserRole  @default(SISWA)
   isActive      Boolean   @default(true)
   createdAt     DateTime  @default(now())
@@ -110,4 +111,15 @@ model Attendance {
   // Unique constraint: one attendance per student per session
   @@unique([studentId, classSessionId])
   @@map("attendances")
+}
+
+model Schedule {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  scheduledAt DateTime
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("schedules")
 }

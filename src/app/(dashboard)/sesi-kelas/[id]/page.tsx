@@ -16,6 +16,8 @@ import {
   Info
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { AddSessionDialog } from "../add-session-dialog";
+import type { ClassSessionFormData } from "@/lib/validations/class-session";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { 
@@ -56,8 +58,10 @@ export default function SessionDetailPage({
   const [loading, setLoading] = useState(true);
   const [attending, setAttending] = useState(false);
   const [copied, setCopied] = useState<string | null>(null);
+  const [editOpen, setEditOpen] = useState(false);
 
   const isStudent = session?.user?.role === "SISWA";
+  const canManage = session?.user?.role === "ADMIN" || session?.user?.role === "PENGAJAR";
   const hasAttended = classSession?.attendances.some(
     (a) => a.student.id === session?.user?.id
   );
@@ -127,18 +131,25 @@ export default function SessionDetailPage({
 
   return (
     <div className="space-y-6 text-black">
-      <div className="flex items-center gap-4">
-        <Button variant="ghost" size="icon" className="bg-biru" asChild>
-          <Link href="/sesi-kelas">
-            <ArrowLeft className="h-5 w-5 text-white" />
-          </Link>
-        </Button>
-        <div>
-          <h1 className="text-2xl font-bold">{classSession.title}</h1>
-            <p className="inline-flex text-black bg-kuning px-2 rounded-lg mt-1">
-              oleh {classSession.createdBy.name}
-            </p>
+      <div className="flex items-center gap-4 justify-between">
+        <div className="flex items-center gap-4">
+          <Button variant="ghost" size="icon" className="bg-biru" asChild>
+            <Link href="/sesi-kelas">
+              <ArrowLeft className="h-5 w-5 text-white" />
+            </Link>
+          </Button>
+          <div>
+            <h1 className="text-2xl font-bold">{classSession.title}</h1>
+              <p className="inline-flex text-black bg-kuning px-2 rounded-lg mt-1">
+                oleh {classSession.createdBy.name}
+              </p>
+          </div>
         </div>
+        {canManage && (
+          <Button onClick={() => setEditOpen(true)} className="bg-amber-300 hover:bg-amber-400">
+            Edit
+          </Button>
+        )}
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 text-black">
@@ -302,6 +313,25 @@ export default function SessionDetailPage({
           </CardContent>
         </Card>
       )}
+
+      <AddSessionDialog
+        open={editOpen}
+        onOpenChange={(open) => setEditOpen(open)}
+        onSuccess={() => {
+          setEditOpen(false);
+          fetchSession();
+        }}
+        mode="edit"
+        sessionId={classSession.id}
+        initialValues={{
+          title: classSession.title,
+          description: classSession.description ?? "",
+          scheduledAt: classSession.scheduledAt,
+          zoomLink: classSession.zoomLink ?? "",
+          zoomMeetingId: classSession.zoomMeetingId ?? "",
+          zoomPasscode: classSession.zoomPasscode ?? "",
+        }}
+      />
     </div>
   );
 }

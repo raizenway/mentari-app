@@ -4,7 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import UsersTable from "./users-table";
-import AddUserDialog from "./add-user-dialog";
+import { UserActions } from "./user-actions";
 
 export default async function UsersPage() {
   const session = await auth();
@@ -44,7 +44,7 @@ export default async function UsersPage() {
             Tambah, edit, dan kelola akun pengguna
           </p>
         </div>
-        <AddUserDialog />
+        <UserActions />
       </div>
 
       {/* Stats */}

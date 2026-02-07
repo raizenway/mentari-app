@@ -9,7 +9,8 @@ import {
   Video, 
   ExternalLink,
   Trash2,
-  Eye
+  Eye,
+  Edit
 } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -35,6 +36,7 @@ interface ClassSessionListProps {
   onRefresh: () => void;
   canManage: boolean;
   currentUserId?: string;
+  onEdit?: (id: string) => void;
 }
 
 export function ClassSessionList({
@@ -43,6 +45,7 @@ export function ClassSessionList({
   onRefresh,
   canManage,
   currentUserId,
+  onEdit,
 }: ClassSessionListProps) {
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
@@ -174,6 +177,15 @@ export function ClassSessionList({
 
             {canManage && (
               <div className="flex gap-2 pt-1">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="flex-1"
+                  onClick={() => onEdit?.(classSession.id)}
+                >
+                  <Edit className="mr-1 h-3 w-3" />
+                  Edit
+                </Button>
                 <Button
                   variant="ghost"
                   size="sm"

@@ -89,7 +89,15 @@ export default function CategoryList({
         <Card key={category.id} className="hover:shadow-md transition-shadow">
           <CardContent className="p-4">
             <div className="flex items-start justify-between gap-2">
-              <div className="flex items-start gap-3 flex-1">
+              <div
+                className="flex items-start gap-3 flex-1 cursor-pointer hover:bg-gray-50 p-2 rounded"
+                role="button"
+                tabIndex={0}
+                onClick={() => router.push(`/bank-soal?categoryId=${category.id}&tab=files`)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") router.push(`/bank-soal?categoryId=${category.id}&tab=files`);
+                }}
+              >
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-amber-100">
                   <Folder className="h-5 w-5 text-amber-600" />
                 </div>

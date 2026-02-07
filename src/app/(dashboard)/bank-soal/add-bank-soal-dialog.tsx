@@ -4,8 +4,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CldUploadWidget } from "next-cloudinary";
 import { Plus, Loader2, Upload, FileText, X } from "lucide-react";
+import { CldUploadWidget } from "next-cloudinary";
 
 import {
   Dialog,
@@ -59,6 +59,10 @@ export default function AddBankSoalDialog({
   } = useForm<BankSoalInput>({
     resolver: zodResolver(bankSoalSchema),
   });
+
+  // Ensure Cloudinary cloud name and upload preset are configured for client widget
+  const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+  const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || "bank_soal_unsigned";
 
   const onSubmit = async (data: BankSoalInput) => {
     if (!uploadedFile) {
@@ -126,6 +130,8 @@ export default function AddBankSoalDialog({
     setValue("filePublicId", "");
   };
 
+  const [widgetError, setWidgetError] = useState<string | null>(null);
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
@@ -134,7 +140,7 @@ export default function AddBankSoalDialog({
           Upload Bank Soal
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-lg">
+      <DialogContent className="max-w-lg bg-white text-black">
         <DialogHeader>
           <DialogTitle>Upload Bank Soal</DialogTitle>
         </DialogHeader>
@@ -205,9 +211,9 @@ export default function AddBankSoalDialog({
                   <X className="h-4 w-4" />
                 </Button>
               </div>
-            ) : (
+            ) : cloudName ? (
               <CldUploadWidget
-                uploadPreset="mentari_bank_soal"
+                uploadPreset={uploadPreset}
                 options={{
                   maxFiles: 1,
                   resourceType: "raw",
@@ -216,19 +222,48 @@ export default function AddBankSoalDialog({
                 onSuccess={handleUploadSuccess}
               >
                 {({ open }) => (
-                  <button
-                    type="button"
-                    onClick={() => open()}
-                    disabled={isLoading}
-                    className="w-full p-6 border-2 border-dashed border-gray-300 rounded-lg hover:border-amber-400 hover:bg-amber-50 transition-colors"
-                  >
-                    <Upload className="h-8 w-8 text-gray-400 mx-auto mb-2" />
-                    <p className="text-sm text-gray-600">
-                      Klik untuk upload file PDF
+                  <div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (typeof open === "function") {
+                          setWidgetError(null);
+                          open();
+                        } else {
+                          setWidgetError(
+                            "Upload widget belum siap. Periksa console (network/script errors), matikan ekstensi adblock, dan pastikan preset unsigned."
+                          );
+                          console.warn("Cloudinary widget 'open' is undefined. Widget details:", {
+                            cloudName,
+                            uploadPreset,
+                          });
+                        }
+                      }}
+                      disabled={isLoading}
+                      className="w-full p-6 border-2 border-dashed border-gray-300 rounded-lg hover:border-amber-400 hover:bg-amber-50 transition-colors"
+                    >
+                      <Upload className="h-8 w-8 text-gray-400 mx-auto mb-2" />
+                      <p className="text-sm text-gray-600">
+                        Klik untuk upload file PDF
+                      </p>
+                    </button>
+
+                    {widgetError && (
+                      <p className="mt-2 text-sm text-destructive">{widgetError}</p>
+                    )}
+
+                    <p className="mt-2 text-xs text-muted-foreground">
+                      Preset upload: <code className="font-mono">{uploadPreset}</code>. Jika widget tidak dapat diklik, pastikan preset ini bersifat <strong>unsigned</strong> di Cloudinary dan mengizinkan resource type <code>raw</code> (pdf).
                     </p>
-                  </button>
+                  </div>
                 )}
               </CldUploadWidget>
+            ) : (
+              <div className="rounded-md bg-yellow-50 border border-yellow-200 p-3 text-sm text-yellow-700">
+                <strong>Cloudinary belum dikonfigurasi.</strong>
+                <p className="mt-1">Silakan set variabel lingkungan <code>NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME</code> di file <code>.env.local</code> lalu restart dev server. Contoh: <code>NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=dhesalzvg</code></p>
+                <p className="mt-2">Jika Anda memerlukan, saya bisa menambahkan pemeriksaan lain atau endpoint server-side untuk upload.</p>
+              </div>
             )}
             {errors.fileUrl && (
               <p className="text-sm text-red-500">{errors.fileUrl.message}</p>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
@@ -22,6 +22,13 @@ import {
   Trash2,
   Folder,
 } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { formatDateShort } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 
@@ -40,22 +47,42 @@ interface BankSoal {
   };
 }
 
+interface Category {
+  id: string;
+  name: string;
+  description: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+  _count: {
+    bankSoals: number;
+  };
+}
+
 interface BankSoalListProps {
   bankSoals: BankSoal[];
+  categories: Category[];
   canManage: boolean;
   canDownload: boolean;
+  initialCategory?: string | null;
 }
 
 export default function BankSoalList({
   bankSoals,
+  categories,
   canManage,
   canDownload,
+  initialCategory = null,
 }: BankSoalListProps) {
   const router = useRouter();
   const { toast } = useToast();
   const [search, setSearch] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(initialCategory ?? null);
   const [deleting, setDeleting] = useState<string | null>(null);
+
+  // Keep selectedCategory in sync if initialCategory changes (e.g. via query param)
+  useEffect(() => {
+    setSelectedCategory(initialCategory ?? null);
+  }, [initialCategory]);
 
   const filteredBankSoals = bankSoals.filter((item) => {
     const matchSearch =
@@ -65,10 +92,6 @@ export default function BankSoalList({
       !selectedCategory || item.category.id === selectedCategory;
     return matchSearch && matchCategory;
   });
-
-  const categories = Array.from(
-    new Set(bankSoals.map((item) => JSON.stringify(item.category)))
-  ).map((str) => JSON.parse(str));
 
   const handleDelete = async (id: string) => {
     if (!confirm("Apakah Anda yakin ingin menghapus file ini?")) return;
@@ -101,32 +124,33 @@ export default function BankSoalList({
       {/* Search and Filter */}
       <div className="flex flex-col sm:flex-row gap-4">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-black" />
           <Input
             placeholder="Cari bank soal..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="pl-10"
+            className="pl-10 text-black"
           />
         </div>
-        <div className="flex gap-2 flex-wrap">
-          <Button
-            variant={selectedCategory === null ? "default" : "outline"}
-            size="sm"
-            onClick={() => setSelectedCategory(null)}
+        <div className="sm:w-64">
+          <Select
+            value={selectedCategory ?? "all"}
+            onValueChange={(value) =>
+              setSelectedCategory(value === "all" ? null : value)
+            }
           >
-            Semua
-          </Button>
-          {categories.map((cat) => (
-            <Button
-              key={cat.id}
-              variant={selectedCategory === cat.id ? "default" : "outline"}
-              size="sm"
-              onClick={() => setSelectedCategory(cat.id)}
-            >
-              {cat.name}
-            </Button>
-          ))}
+            <SelectTrigger className="bg-white text-black">
+              <SelectValue placeholder="Pilih kategori" />
+            </SelectTrigger>
+            <SelectContent className="bg-white text-black">
+              <SelectItem value="all">Semua Kategori</SelectItem>
+              {categories.map((cat) => (
+                <SelectItem key={cat.id} value={cat.id}>
+                  {cat.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
       </div>
 
@@ -154,7 +178,9 @@ export default function BankSoalList({
                     </div>
                     <div className="flex-1 min-w-0">
                       <h3 className="font-medium text-gray-900 truncate">
-                        {item.title}
+                        <Link href={`/bank-soal/${item.id}`} className="hover:underline">
+                          {item.title}
+                        </Link>
                       </h3>
                       <div className="flex items-center gap-2 mt-1">
                         <Badge variant="secondary" className="text-xs">
