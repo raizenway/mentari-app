@@ -49,12 +49,12 @@ const navigation = [
     icon: Calendar,
     roles: ["SISWA", "PENGAJAR", "ADMIN"],
   },
-  {
-    name: "Presensi Saya",
-    href: "/presensi",
-    icon: ClipboardCheck,
-    roles: ["SISWA"],
-  },
+  // {
+  //   name: "Presensi Saya",
+  //   href: "/presensi",
+  //   icon: ClipboardCheck,
+  //   roles: ["SISWA"],
+  // },
   {
     name: "Kelola Pengguna",
     href: "/users",

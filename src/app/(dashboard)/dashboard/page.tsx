@@ -104,7 +104,7 @@ export default async function DashboardPage() {
               <Users className="h-4 w-4 text-blue-500" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{totalUsers}</div>
+              <div className="text-2xl font-bold text-black">{totalUsers}</div>
               <p className="text-xs text-gray-500 mt-1">Pengguna terdaftar</p>
             </CardContent>
           </Card>
@@ -125,9 +125,6 @@ export default async function DashboardPage() {
           </Card>
         )}
       </div>
-
-      {/* Schedule Announcements */}
-      <ScheduleAnnouncement schedules={schedules} />
 
       {/* Upcoming Sessions */}
       {upcomingSessions.length > 0 && (
@@ -175,7 +172,7 @@ export default async function DashboardPage() {
                           size="sm"
                           className="bg-amber-500 hover:bg-amber-600"
                         >
-                          {user.role === "SISWA" ? (hasAttended ? "Lihat Detail" : "Gabung Kelas") : `Detail (${classSession._count.attendances} hadir)`}
+                          {user.role === "SISWA" ? (hasAttended ? "Lihat Detail" : "Gabung Kelas") : `Detail`}
                         </Button>
                       </Link>
                     </div>
@@ -186,6 +183,9 @@ export default async function DashboardPage() {
           </CardContent>
         </Card>
       )}
+
+            {/* Schedule Announcements */}
+      <ScheduleAnnouncement schedules={schedules} />
 
       {/* Quick Actions */}
       <Card>

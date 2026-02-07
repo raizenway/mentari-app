@@ -183,7 +183,7 @@ export default function BankSoalList({
                         </Link>
                       </h3>
                       <div className="flex items-center gap-2 mt-1">
-                        <Badge variant="secondary" className="text-xs">
+                        <Badge variant="secondary" className="text-xs text-gray-600">
                           <Folder className="h-3 w-3 mr-1" />
                           {item.category.name}
                         </Badge>
@@ -202,13 +202,13 @@ export default function BankSoalList({
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button variant="ghost" size="icon" className="shrink-0">
-                        <MoreVertical className="h-4 w-4" />
+                        <MoreVertical className="h-4 w-4 text-biru" />
                       </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
+                    <DropdownMenuContent align="end" className="bg-white text-black">
                       <DropdownMenuItem asChild>
                         <Link href={`/bank-soal/${item.id}`}>
-                          <Eye className="mr-2 h-4 w-4" />
+                          <Eye className="mr-2 h-4 w-4 " />
                           Lihat File
                         </Link>
                       </DropdownMenuItem>

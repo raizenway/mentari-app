@@ -182,14 +182,14 @@ export default function SessionDetailPage({
                   })} WIB
                 </span>
               </div>
-              <div className="flex items-center gap-3">
+              {/* <div className="flex items-center gap-3">
                 <Users className="h-5 w-5 text-muted-foreground" />
                 <span>{classSession.attendances.length} peserta hadir</span>
-              </div>
+              </div> */}
             </div>
 
             {/* Student Attendance Button */}
-            {isStudent && (
+            {/* {isStudent && (
               <div className="pt-4 border-t">
                 {hasAttended ? (
                   <div className="flex items-center gap-2 text-green-600">
@@ -202,7 +202,7 @@ export default function SessionDetailPage({
                   </Button>
                 )}
               </div>
-            )}
+            )} */}
           </CardContent>
         </Card>
 
@@ -274,7 +274,7 @@ export default function SessionDetailPage({
       </div>
 
       {/* Attendance List (Admin & Pengajar) */}
-      {!isStudent && (
+      {/* {!isStudent && (
         <Card>
           <CardHeader>
             <CardTitle className="text-lg">Daftar Presensi</CardTitle>
@@ -312,7 +312,7 @@ export default function SessionDetailPage({
             )}
           </CardContent>
         </Card>
-      )}
+      )} */}
 
       <AddSessionDialog
         open={editOpen}

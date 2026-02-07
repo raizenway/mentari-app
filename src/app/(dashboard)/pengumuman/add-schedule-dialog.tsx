@@ -80,7 +80,7 @@ export function AddScheduleDialog() {
           Tambah Jadwal
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[500px]">
+      <DialogContent className="sm:max-w-[500px] bg-white text-black">
         <DialogHeader>
           <DialogTitle>Tambah Jadwal Baru</DialogTitle>
           <DialogDescription>

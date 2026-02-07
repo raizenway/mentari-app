@@ -128,7 +128,7 @@ export function ImportUsersDialog({ open: controlledOpen, onOpenChange: controll
     <>
       <Dialog open={open && !showPreview} onOpenChange={(isOpen) => isOpen ? onOpenChange(true) : handleClose()}>
         {children && <DialogTrigger asChild>{children}</DialogTrigger>}
-        <DialogContent className="sm:max-w-[500px]">
+        <DialogContent className="sm:max-w-[500px] bg-white text-black">
           <DialogHeader>
             <DialogTitle>Import User dari Excel</DialogTitle>
             <DialogDescription>

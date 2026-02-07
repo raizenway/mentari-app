@@ -7,9 +7,9 @@ import { Button } from "@/components/ui/button";
 
 export function UserActions() {
   return (
-    <div className="flex gap-2">
+    <div className="flex gap-2 text-black">
       <ImportUsersDialog>
-        <Button variant="outline" className="gap-2">
+        <Button variant="outline" className="gap-2 hover:bg-gray-200">
           <FileSpreadsheet className="h-4 w-4" />
           Import dari Excel
         </Button>
