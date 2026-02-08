@@ -132,8 +132,9 @@ export function ImportUsersDialog({ open: controlledOpen, onOpenChange: controll
           <DialogHeader>
             <DialogTitle>Import User dari Excel</DialogTitle>
             <DialogDescription>
-              Unggah file Excel (.xlsx atau .xls) dengan kolom: email, password, name, phone
-              (opsional), role (opsional), asalSekolah (opsional)
+              Unggah file Excel (.xlsx atau .xls) dengan kolom: email, password, fullName, shortName
+              (opsional), class (opsional), gender (opsional), domicile (opsional), ages (opsional),
+              phone (opsional), role (opsional), asalSekolah (opsional)
             </DialogDescription>
           </DialogHeader>
 
@@ -179,10 +180,15 @@ export function ImportUsersDialog({ open: controlledOpen, onOpenChange: controll
               <ul className="list-disc list-inside space-y-1 text-blue-800">
                 <li>email - Alamat email yang valid</li>
                 <li>password - Minimal 6 karakter</li>
-                <li>name - Nama lengkap</li>
+                <li>fullName - Nama lengkap</li>
               </ul>
               <p className="font-semibold text-blue-900 mb-2 mt-3">Kolom Opsional:</p>
               <ul className="list-disc list-inside space-y-1 text-blue-800">
+                <li>shortName - Nama panggilan</li>
+                <li>class - Kelas (maksimal 30 karakter)</li>
+                <li>gender - LAKI_LAKI atau PEREMPUAN</li>
+                <li>domicile - Domisili (maksimal 50 karakter)</li>
+                <li>ages - Umur dalam angka</li>
                 <li>phone - Nomor telepon</li>
                 <li>role - SISWA, PENGAJAR, atau ADMIN (default: SISWA)</li>
                 <li>asalSekolah - Asal sekolah</li>

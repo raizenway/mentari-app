@@ -37,14 +37,19 @@ export async function parseXlsxFile(buffer: ArrayBuffer): Promise<ImportResult> 
 
     const emailIdx = findColumnIndex("email");
     const passwordIdx = findColumnIndex("password");
-    const nameIdx = findColumnIndex("name");
+    const fullNameIdx = findColumnIndex("fullName");
+    const shortNameIdx = findColumnIndex("shortName");
+    const classIdx = findColumnIndex("class");
+    const genderIdx = findColumnIndex("gender");
+    const domicileIdx = findColumnIndex("domicile");
+    const agesIdx = findColumnIndex("ages");
     const phoneIdx = findColumnIndex("phone");
     const roleIdx = findColumnIndex("role");
     const asalSekolahIdx = findColumnIndex("asalSekolah");
 
     // Validate required columns exist
-    if (emailIdx === -1 || passwordIdx === -1 || nameIdx === -1) {
-      throw new Error("Kolom wajib (email, password, name) tidak ditemukan");
+    if (emailIdx === -1 || passwordIdx === -1 || fullNameIdx === -1) {
+      throw new Error("Kolom wajib (email, password, fullName) tidak ditemukan");
     }
 
     // Process each row
@@ -65,13 +70,22 @@ export async function parseXlsxFile(buffer: ArrayBuffer): Promise<ImportResult> 
       const rawRow: any = {
         email: row[emailIdx] || "",
         password: row[passwordIdx] || "",
-        name: row[nameIdx] || "",
+        fullName: row[fullNameIdx] || "",
+        shortName: shortNameIdx !== -1 ? (row[shortNameIdx] || undefined) : undefined,
+        class: classIdx !== -1 ? (row[classIdx] || undefined) : undefined,
+        gender: genderIdx !== -1 ? (row[genderIdx] || undefined) : undefined,
+        domicile: domicileIdx !== -1 ? (row[domicileIdx] || undefined) : undefined,
+        ages: agesIdx !== -1 ? (row[agesIdx] ? Number(row[agesIdx]) : undefined) : undefined,
         phone: phoneIdx !== -1 ? (row[phoneIdx] || "") : undefined,
         role: roleIdx !== -1 ? (row[roleIdx] || undefined) : undefined,
         asalSekolah: asalSekolahIdx !== -1 ? (row[asalSekolahIdx] || undefined) : undefined,
       };
 
       // Convert empty strings to undefined for optional fields
+      if (!rawRow.shortName) rawRow.shortName = undefined;
+      if (!rawRow.class) rawRow.class = undefined;
+      if (!rawRow.gender) rawRow.gender = undefined;
+      if (!rawRow.domicile) rawRow.domicile = undefined;
       if (!rawRow.phone) rawRow.phone = undefined;
       if (!rawRow.role) rawRow.role = undefined;
       if (!rawRow.asalSekolah) rawRow.asalSekolah = undefined;
