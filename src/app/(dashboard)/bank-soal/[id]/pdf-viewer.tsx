@@ -105,7 +105,7 @@ export default function PDFViewer({ fileUrl }: PDFViewerProps) {
           </Button>
           <span className="text-sm text-muted-foreground w-12 text-center">{Math.round(scale * 100)}%</span>
           <Button variant="outline" size="sm" onClick={zoomIn}>
-            <ZoomIn className="h-4 w-4 text-black2" />
+            <ZoomIn className="h-4 w-4 text-black" />
           </Button>
         </div>
       </div>
