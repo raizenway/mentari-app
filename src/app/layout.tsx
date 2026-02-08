@@ -16,6 +16,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Mentari - Mentor Anak Negeri",
   description: "Platform bimbingan belajar untuk membantu siswa dan pengajar dalam mengelola bank soal dan kelas",
+  icons: {
+    icon: "/logo-mentari.png",
+    shortcut: "/logo-mentari.png",
+    apple: "/logo-mentari.png",
+  },
 };
 
 import Providers from "./providers";

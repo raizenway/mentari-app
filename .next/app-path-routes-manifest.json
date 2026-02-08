@@ -34,6 +34,5 @@
   "/api/users/import/confirm/route": "/api/users/import/confirm",
   "/api/users/import/route": "/api/users/import",
   "/api/users/route": "/api/users",
-  "/favicon.ico/route": "/favicon.ico",
   "/page": "/"
 }

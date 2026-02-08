@@ -224,12 +224,6 @@
       "namedRegex": "^/dashboard(?:/)?$"
     },
     {
-      "page": "/favicon.ico",
-      "regex": "^/favicon\\.ico(?:/)?$",
-      "routeKeys": {},
-      "namedRegex": "^/favicon\\.ico(?:/)?$"
-    },
-    {
       "page": "/login",
       "regex": "^/login(?:/)?$",
       "routeKeys": {},
