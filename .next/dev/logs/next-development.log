@@ -1,0 +1,102 @@
+[00:00:05.258] Server  LOG     ✓ Ready in 4.3s
+[00:00:11.285] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:12.158] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/login" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="layout.tsx">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html
+                          lang="id"
+-                         data-kantu="1"
+                        >
+                  ...
+
+[00:00:13.984] Browser WARN    Image with src "/logo-mentari.png" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
+Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
+[00:00:30.266] Server  LOG     prisma:query "SELECT \"public\".\"users\".\"id\", \"public\".\"users\".\"email\", \"public\".\"users\".\"password\", \"public\".\"users\".\"name\", \"public\".\"users\".\"fullName\", \"public\".\"users\".\"shortName\", \"public\".\"users\".\"phone\", \"public\".\"users\".\"profileImage\", \"public\".\"users\".\"asalSekolah\", \"public\".\"users\".\"class_\", \"public\".\"users\".\"gender\"::text, \"public\".\"users\".\"domicile\", \"public\".\"users\".\"ages\", \"public\".\"users\".\"role\"::text, \"public\".\"users\".\"isActive\", \"public\".\"users\".\"createdAt\", \"public\".\"users\".\"updatedAt\" FROM \"public\".\"users\" WHERE (\"public\".\"users\".\"email\" = $1 AND 1=1) LIMIT $2 OFFSET $3"
+[00:00:31.240] Server  LOG     prisma:query "SELECT \"public\".\"schedules\".\"id\", \"public\".\"schedules\".\"title\", \"public\".\"schedules\".\"description\", \"public\".\"schedules\".\"scheduledAt\", \"public\".\"schedules\".\"createdAt\", \"public\".\"schedules\".\"updatedAt\" FROM \"public\".\"schedules\" WHERE \"public\".\"schedules\".\"scheduledAt\" >= $1 ORDER BY \"public\".\"schedules\".\"scheduledAt\" ASC LIMIT $2 OFFSET $3"
+[00:00:31.243] Server  LOG     prisma:query "SELECT COUNT(*) FROM (SELECT \"public\".\"bank_soals\".\"id\" FROM \"public\".\"bank_soals\" WHERE 1=1 OFFSET $1) AS \"sub\""
+[00:00:31.245] Server  LOG     prisma:query "SELECT COUNT(*) FROM (SELECT \"public\".\"class_sessions\".\"id\" FROM \"public\".\"class_sessions\" WHERE \"public\".\"class_sessions\".\"scheduledAt\" >= $1 OFFSET $2) AS \"sub\""
+[00:00:31.246] Server  LOG     prisma:query "SELECT \"public\".\"class_sessions\".\"id\", \"public\".\"class_sessions\".\"title\", \"public\".\"class_sessions\".\"description\", \"public\".\"class_sessions\".\"scheduledAt\", \"public\".\"class_sessions\".\"zoomLink\", \"public\".\"class_sessions\".\"zoomMeetingId\", \"public\".\"class_sessions\".\"zoomPasscode\", \"public\".\"class_sessions\".\"createdAt\", \"public\".\"class_sessions\".\"updatedAt\", \"public\".\"class_sessions\".\"createdById\", COALESCE(\"aggr_selection_0_Attendance\".\"_aggr_count_attendances\", 0) AS \"_aggr_count_attendances\" FROM \"public\".\"class_sessions\" LEFT JOIN (SELECT \"public\".\"attendances\".\"classSessionId\", COUNT(*) AS \"_aggr_count_attendances\" FROM \"public\".\"attendances\" WHERE 1=1 GROUP BY \"public\".\"attendances\".\"classSessionId\") AS \"aggr_selection_0_Attendance\" ON (\"public\".\"class_sessions\".\"id\" = \"aggr_selection_0_Attendance\".\"classSessionId\") WHERE \"public\".\"class_sessions\".\"scheduledAt\" >= $1 ORDER BY \"public\".\"class_sessions\".\"scheduledAt\" ASC LIMIT $2 OFFSET $3"
+[00:00:31.288] Server  LOG     prisma:query "SELECT \"public\".\"users\".\"id\", \"public\".\"users\".\"name\" FROM \"public\".\"users\" WHERE \"public\".\"users\".\"id\" IN ($1) OFFSET $2"
+[00:00:31.320] Server  LOG     prisma:query "SELECT \"public\".\"attendances\".\"id\", \"public\".\"attendances\".\"classSessionId\" FROM \"public\".\"attendances\" WHERE \"public\".\"attendances\".\"studentId\" = $1 OFFSET $2"
+[00:00:31.820] Server  LOG     prisma:query "SELECT COUNT(*) FROM (SELECT \"public\".\"class_sessions\".\"id\" FROM \"public\".\"class_sessions\" WHERE \"public\".\"class_sessions\".\"scheduledAt\" >= $1 OFFSET $2) AS \"sub\""
+[00:00:31.823] Server  LOG     prisma:query "SELECT COUNT(*) FROM (SELECT \"public\".\"bank_soals\".\"id\" FROM \"public\".\"bank_soals\" WHERE 1=1 OFFSET $1) AS \"sub\""
+[00:00:31.825] Server  LOG     prisma:query "SELECT \"public\".\"schedules\".\"id\", \"public\".\"schedules\".\"title\", \"public\".\"schedules\".\"description\", \"public\".\"schedules\".\"scheduledAt\", \"public\".\"schedules\".\"createdAt\", \"public\".\"schedules\".\"updatedAt\" FROM \"public\".\"schedules\" WHERE \"public\".\"schedules\".\"scheduledAt\" >= $1 ORDER BY \"public\".\"schedules\".\"scheduledAt\" ASC LIMIT $2 OFFSET $3"
+[00:00:31.828] Server  LOG     prisma:query "SELECT \"public\".\"class_sessions\".\"id\", \"public\".\"class_sessions\".\"title\", \"public\".\"class_sessions\".\"description\", \"public\".\"class_sessions\".\"scheduledAt\", \"public\".\"class_sessions\".\"zoomLink\", \"public\".\"class_sessions\".\"zoomMeetingId\", \"public\".\"class_sessions\".\"zoomPasscode\", \"public\".\"class_sessions\".\"createdAt\", \"public\".\"class_sessions\".\"updatedAt\", \"public\".\"class_sessions\".\"createdById\", COALESCE(\"aggr_selection_0_Attendance\".\"_aggr_count_attendances\", 0) AS \"_aggr_count_attendances\" FROM \"public\".\"class_sessions\" LEFT JOIN (SELECT \"public\".\"attendances\".\"classSessionId\", COUNT(*) AS \"_aggr_count_attendances\" FROM \"public\".\"attendances\" WHERE 1=1 GROUP BY \"public\".\"attendances\".\"classSessionId\") AS \"aggr_selection_0_Attendance\" ON (\"public\".\"class_sessions\".\"id\" = \"aggr_selection_0_Attendance\".\"classSessionId\") WHERE \"public\".\"class_sessions\".\"scheduledAt\" >= $1 ORDER BY \"public\".\"class_sessions\".\"scheduledAt\" ASC LIMIT $2 OFFSET $3"
+[00:00:31.832] Server  LOG     prisma:query "SELECT \"public\".\"users\".\"id\", \"public\".\"users\".\"name\" FROM \"public\".\"users\" WHERE \"public\".\"users\".\"id\" IN ($1) OFFSET $2"
+[00:00:31.855] Server  LOG     prisma:query "SELECT \"public\".\"attendances\".\"id\", \"public\".\"attendances\".\"classSessionId\" FROM \"public\".\"attendances\" WHERE \"public\".\"attendances\".\"studentId\" = $1 OFFSET $2"
+[00:00:58.014] Browser LOG     Submitting profile update: {"ages":18,"class":"12 MIPA","domicile":"Kota Bandung","gender":"LAKI_LAKI","phone":"6283893494538","shortName":"Harikun"}
+[00:00:59.425] Server  LOG     Received body: {}
+[00:00:59.427] Server  LOG     Update data: {}
+[00:00:59.433] Server  LOG     prisma:query "SELECT 1"
+[00:00:59.462] Server  LOG     prisma:query "UPDATE \"public\".\"users\" SET \"shortName\" = $1, \"class_\" = $2, \"gender\" = CAST($3::text AS \"public\".\"Gender\"), \"domicile\" = $4, \"ages\" = $5, \"phone\" = $6, \"updatedAt\" = $7 WHERE (\"public\".\"users\".\"id\" = $8 AND 1=1) RETURNING \"public\".\"users\".\"id\", \"public\".\"users\".\"email\", \"public\".\"users\".\"name\", \"public\".\"users\".\"fullName\", \"public\".\"users\".\"shortName\", \"public\".\"users\".\"phone\", \"public\".\"users\".\"role\"::text, \"public\".\"users\".\"profileImage\", \"public\".\"users\".\"class_\", \"public\".\"users\".\"gender\"::text, \"public\".\"users\".\"domicile\", \"public\".\"users\".\"ages\", \"public\".\"users\".\"asalSekolah\""
+[00:00:59.578] Browser LOG     API Success: {"ages":18,"asalSekolah":"SMAN 15 Bandung","class_":"12 MIPA","domicile":"Kota Bandung","email":"harisantoso0105@gmail.com","fullName":null,"gender":"LAKI_LAKI","id":"cmlc77cze0000kc5q9p4wb6j3","name":"Banteng Harisan","phone":"6283893494538","profileImage":null,"role":"SISWA","shortName":"Harikun"}
+[00:01:01.331] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:01:01.658] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/profile" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="layout.tsx">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html
+                          lang="id"
+-                         data-kantu="1"
+                        >
+                  ...
+
+[00:05:50.260] Server  LOG     ✓ Compiled in 6.5s
+[00:32:24.483] Server  LOG       Reload env: .env.local
+[00:32:26.308] Server  LOG     ✓ Compiled in 1678ms
+[00:32:26.453] Server  LOG       Reload env: .env.local
+[00:32:30.009] Server  LOG       Reload env: .env.local
+[00:32:34.793] Server  LOG       Reload env: .env.local

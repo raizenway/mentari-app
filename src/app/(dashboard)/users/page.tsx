@@ -19,11 +19,18 @@ export default async function UsersPage() {
       id: true,
       email: true,
       name: true,
+      fullName: true,
+      shortName: true,
       phone: true,
       role: true,
       isActive: true,
       createdAt: true,
       profileImage: true,
+      class_: true,
+      gender: true,
+      domicile: true,
+      ages: true,
+      asalSekolah: true,
     },
   });
 

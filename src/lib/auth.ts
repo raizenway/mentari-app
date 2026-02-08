@@ -15,6 +15,7 @@ declare module "next-auth" {
     domicile?: string | null;
     ages?: number | null;
     asalSekolah?: string | null;
+    phone?: string | null;
   }
   interface Session {
     user: {
@@ -28,6 +29,7 @@ declare module "next-auth" {
       domicile?: string | null;
       ages?: number | null;
       asalSekolah?: string | null;
+      phone?: string | null;
       role: UserRole;
       image?: string | null;
     };
@@ -45,6 +47,7 @@ declare module "@auth/core/jwt" {
     domicile?: string | null;
     ages?: number | null;
     asalSekolah?: string | null;
+    phone?: string | null;
   }
 }
 
@@ -93,6 +96,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           domicile: user.domicile,
           ages: user.ages,
           asalSekolah: user.asalSekolah,
+          phone: user.phone,
           role: user.role,
           image: user.profileImage,
           isActive: user.isActive,
@@ -113,6 +117,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         token.domicile = user.domicile;
         token.ages = user.ages;
         token.asalSekolah = user.asalSekolah;
+        token.phone = user.phone;
       }
       return token;
     },
@@ -128,6 +133,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         session.user.domicile = token.domicile;
         session.user.ages = token.ages;
         session.user.asalSekolah = token.asalSekolah;
+        session.user.phone = token.phone;
       }
       return session;
     },

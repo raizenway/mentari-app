@@ -67,7 +67,7 @@ export async function POST(req: Request) {
       password,
       fullName,
       shortName,
-      class,
+      class: classValue,  // Rename to avoid reserved keyword
       gender,
       domicile,
       ages,
@@ -99,7 +99,7 @@ export async function POST(req: Request) {
         name: fullName, // Store fullName in name for backwards compatibility
         fullName,
         shortName,
-        class_: class,
+        class_: classValue,
         gender,
         domicile,
         ages,
