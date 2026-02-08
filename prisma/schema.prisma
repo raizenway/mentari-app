@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
@@ -20,6 +20,11 @@ enum UserRole {
   ADMIN
 }
 
+enum Gender {
+  LAKI_LAKI
+  PEREMPUAN
+}
+
 // =====================
 // MODELS
 // =====================
@@ -28,10 +33,16 @@ model User {
   id            String    @id @default(cuid())
   email         String    @unique
   password      String
-  name          String
+  name          String    // @deprecated - use fullName instead, kept for backwards compatibility
+  fullName      String?  // Full name
+  shortName     String?   // Nickname/short name
   phone         String?
   profileImage  String?
   asalSekolah   String?
+  class_        String?   @db.VarChar(30)
+  gender        Gender?
+  domicile      String?   @db.VarChar(50)
+  ages          Int?
   role          UserRole  @default(SISWA)
   isActive      Boolean   @default(true)
   createdAt     DateTime  @default(now())
@@ -41,6 +52,8 @@ model User {
   bankSoals       BankSoal[]      @relation("UploadedBy")
   classSessions   ClassSession[]  @relation("CreatedBy")
   attendances     Attendance[]    @relation("StudentAttendance")
+  tryOutsCreated  TryOut[]        @relation("TryOutCreator")
+  results         Result[]        @relation("StudentResults")
 
   @@map("users")
 }
@@ -122,4 +135,73 @@ model Schedule {
   updatedAt   DateTime @updatedAt
 
   @@map("schedules")
+}
+
+model TryOut {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  timeLimit   Int      // Time limit in minutes (required)
+  totalScore  Int      // Total score for all questions (computed)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  createdById String
+  createdBy   User @relation("TryOutCreator", fields: [createdById], references: [id], onDelete: Cascade)
+
+  questions   Question[]
+  results     Result[]
+}
+
+model Question {
+  id             String   @id @default(cuid())
+  content        String   // Question text
+  options        String   // JSON array of 5 options: ["Option A", "Option B", "Option C", "Option D", "Option E"]
+  correctAnswer  Int      // Index of correct option (0-4)
+  score          Int      @default(1) // Points for this question
+  imageUrl       String?  // Cloudflare R2 image URL for question attachment (optional)
+  attachmentText String?  // Additional text description or context (optional)
+  createdAt      DateTime @default(now())
+
+  // Relations
+  tryOutId       String
+  tryOut         TryOut @relation(fields: [tryOutId], references: [id], onDelete: Cascade)
+
+  answers        Answer[]
+}
+
+model Answer {
+  id        String   @id @default(cuid())
+  answer    Int      // Selected option index (0-4)
+  isCorrect Boolean  // Auto-graded
+  createdAt DateTime @default(now())
+
+  // Relations
+  questionId String
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  resultId   String
+  result     Result @relation(fields: [resultId], references: [id], onDelete: Cascade)
+}
+
+model Result {
+  id         String   @id @default(cuid())
+  score      Int      // Total score obtained
+  totalScore Int      // Maximum possible score
+  completedAt DateTime @default(now())
+
+  // Relations
+  studentId  String
+  student    User @relation("StudentResults", fields: [studentId], references: [id], onDelete: Cascade)
+
+  tryOutId   String
+  tryOut     TryOut @relation(fields: [tryOutId], references: [id], onDelete: Cascade)
+
+  answers    Answer[]
+
+  // Unique constraint: one result per student per try-out (enforces single attempt)
+  @@unique([studentId, tryOutId])
+  @@map("results")
 }

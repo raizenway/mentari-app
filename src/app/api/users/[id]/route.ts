@@ -26,11 +26,18 @@ export async function GET(
         id: true,
         email: true,
         name: true,
+        fullName: true,
+        shortName: true,
         phone: true,
         role: true,
         isActive: true,
         profileImage: true,
         createdAt: true,
+        class_: true,
+        gender: true,
+        domicile: true,
+        ages: true,
+        asalSekolah: true,
       },
     });
 
@@ -73,16 +80,36 @@ export async function PATCH(
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
-    // Non-admin can only update name and phone
+    // Non-admin can only update shortName, class, gender, domicile, ages, and phone
     const allowedFields = isAdmin
-      ? ["name", "phone", "role"]
-      : ["name", "phone"];
+      ? ["fullName", "shortName", "class", "gender", "domicile", "ages", "phone", "role", "asalSekolah"]
+      : ["shortName", "class", "gender", "domicile", "ages", "phone"];
+
+    console.log("Received body:", body);
 
     const updateData: Record<string, any> = {};
     for (const field of allowedFields) {
-      if (body[field] !== undefined) {
-        updateData[field] = body[field];
+      // Include field if it's defined (can be null to clear the value)
+      if (field in body && body[field] !== undefined) {
+        // Map field names for Prisma
+        if (field === "fullName") {
+          updateData.name = body[field]; // Update name for backwards compatibility
+          updateData.fullName = body[field];
+        } else if (field === "class") {
+          updateData.class_ = body[field];
+        } else {
+          updateData[field] = body[field];
+        }
       }
+    }
+
+    console.log("Update data:", updateData);
+
+    if (Object.keys(updateData).length === 0) {
+      return NextResponse.json(
+        { error: "Tidak ada data untuk diupdate" },
+        { status: 400 }
+      );
     }
 
     const user = await prisma.user.update({
@@ -92,9 +119,16 @@ export async function PATCH(
         id: true,
         email: true,
         name: true,
+        fullName: true,
+        shortName: true,
         phone: true,
         role: true,
         profileImage: true,
+        class_: true,
+        gender: true,
+        domicile: true,
+        ages: true,
+        asalSekolah: true,
       },
     });
 

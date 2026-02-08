@@ -19,11 +19,18 @@ export async function GET() {
         id: true,
         email: true,
         name: true,
+        fullName: true,
+        shortName: true,
         phone: true,
         role: true,
         isActive: true,
         createdAt: true,
         profileImage: true,
+        class_: true,
+        gender: true,
+        domicile: true,
+        ages: true,
+        asalSekolah: true,
       },
     });
 
@@ -55,7 +62,19 @@ export async function POST(req: Request) {
       );
     }
 
-    const { email, password, name, phone, role } = validation.data;
+    const {
+      email,
+      password,
+      fullName,
+      shortName,
+      class,
+      gender,
+      domicile,
+      ages,
+      phone,
+      role,
+      asalSekolah
+    } = validation.data;
 
     // Check if email already exists
     const existingUser = await prisma.user.findUnique({
@@ -77,14 +96,23 @@ export async function POST(req: Request) {
       data: {
         email,
         password: hashedPassword,
-        name,
+        name: fullName, // Store fullName in name for backwards compatibility
+        fullName,
+        shortName,
+        class_: class,
+        gender,
+        domicile,
+        ages,
         phone,
         role,
+        asalSekolah,
       },
       select: {
         id: true,
         email: true,
         name: true,
+        fullName: true,
+        shortName: true,
         role: true,
       },
     });

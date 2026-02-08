@@ -32,19 +32,26 @@ export const registerUserSchema = z.object({
   password: z
     .string()
     .min(6, "Password minimal 6 karakter"),
-  name: z
+  fullName: z
     .string()
-    .min(1, "Nama harus diisi")
+    .min(1, "Nama lengkap harus diisi")
     .min(2, "Nama minimal 2 karakter"),
+  shortName: z.string().optional(),
+  class: z.string().max(30, "Kelas maksimal 30 karakter").optional(),
+  gender: z.enum(["LAKI_LAKI", "PEREMPUAN"]).optional(),
+  domicile: z.string().max(50, "Domisili maksimal 50 karakter").optional(),
+  ages: z.number().int().positive("Umur harus berupa angka positif").optional(),
   phone: z.string().optional(),
   role: z.enum(["SISWA", "PENGAJAR", "ADMIN"]),
+  asalSekolah: z.string().optional(),
 });
 
 export const updateProfileSchema = z.object({
-  name: z
-    .string()
-    .min(1, "Nama harus diisi")
-    .min(2, "Nama minimal 2 karakter"),
+  shortName: z.string().optional(),
+  class: z.string().max(30, "Kelas maksimal 30 karakter").optional(),
+  gender: z.enum(["LAKI_LAKI", "PEREMPUAN"]).optional(),
+  domicile: z.string().max(50, "Domisili maksimal 50 karakter").optional(),
+  ages: z.number().int().positive("Umur harus berupa angka positif").optional().nullable(),
   phone: z.string().optional(),
 });
 

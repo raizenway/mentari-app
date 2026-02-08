@@ -33,7 +33,13 @@ export async function POST(req: NextRequest) {
           data: {
             email: row.email,
             password: hashedPassword,
-            name: row.name,
+            name: row.fullName, // Store fullName in name for backwards compatibility
+            fullName: row.fullName,
+            shortName: row.shortName,
+            class_: row.class,
+            gender: row.gender,
+            domicile: row.domicile,
+            ages: row.ages,
             phone: row.phone,
             role: row.role || "SISWA",
             asalSekolah: row.asalSekolah,

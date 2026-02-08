@@ -29,11 +29,18 @@ interface User {
   id: string;
   email: string;
   name: string;
+  fullName: string | null;
+  shortName: string | null;
   phone: string | null;
   role: UserRole;
   isActive: boolean;
   createdAt: Date;
   profileImage: string | null;
+  class_: string | null;
+  gender: "LAKI_LAKI" | "PEREMPUAN" | null;
+  domicile: string | null;
+  ages: number | null;
+  asalSekolah: string | null;
 }
 
 interface UsersTableProps {
@@ -104,14 +111,23 @@ export default function UsersTable({ users }: UsersTableProps) {
                     <Avatar className="h-8 w-8">
                       <AvatarImage src={user.profileImage || undefined} />
                       <AvatarFallback className="bg-amber-100 text-amber-700">
-                        {user.name.charAt(0).toUpperCase()}
+                        {(user.fullName || user.name || "?").charAt(0).toUpperCase()}
                       </AvatarFallback>
                     </Avatar>
                     <div>
-                      <p className="font-medium">{user.name}</p>
-                      {user.phone && (
-                        <p className="text-xs text-gray-500">{user.phone}</p>
+                      <p className="font-medium">{user.fullName || user.name}</p>
+                      {user.shortName && (
+                        <p className="text-xs text-gray-500">Panggilan: {user.shortName}</p>
                       )}
+                      <div className="text-xs text-gray-500">
+                        {[
+                          user.class_ && `Kelas: ${user.class_}`,
+                          user.gender && user.gender.toLowerCase().replace("_", " "),
+                          user.domicile,
+                          user.ages && `${user.ages} thn`,
+                          user.asalSekolah
+                        ].filter(Boolean).join(" • ")}
+                      </div>
                     </div>
                   </div>
                 </TableCell>

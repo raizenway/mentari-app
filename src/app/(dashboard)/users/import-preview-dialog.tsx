@@ -127,7 +127,7 @@ export function ImportPreviewDialog({
               <TableRow>
                 <TableHead className="w-[60px]">Baris</TableHead>
                 <TableHead>Email</TableHead>
-                <TableHead>Nama</TableHead>
+                <TableHead>Nama Lengkap</TableHead>
                 <TableHead>Role</TableHead>
                 <TableHead>Status</TableHead>
               </TableRow>
@@ -138,7 +138,24 @@ export function ImportPreviewDialog({
                 <TableRow key={`valid-${idx}`}>
                   <TableCell className="text-muted-foreground">{idx + 1}</TableCell>
                   <TableCell>{row.email}</TableCell>
-                  <TableCell>{row.name}</TableCell>
+                  <TableCell>
+                    <div>
+                      <div className="font-medium">{row.fullName}</div>
+                      {row.shortName && (
+                        <div className="text-xs text-muted-foreground">Panggilan: {row.shortName}</div>
+                      )}
+                      {(row.class || row.gender || row.domicile || row.ages) && (
+                        <div className="text-xs text-muted-foreground">
+                          {[
+                            row.class && `Kelas: ${row.class}`,
+                            row.gender && row.gender.toLowerCase().replace("_", " "),
+                            row.domicile && `${row.domicile}`,
+                            row.ages && `${row.ages} thn`
+                          ].filter(Boolean).join(" • ")}
+                        </div>
+                      )}
+                    </div>
+                  </TableCell>
                   <TableCell>
                     <Badge variant="outline">{row.role || "SISWA"}</Badge>
                   </TableCell>
@@ -155,7 +172,12 @@ export function ImportPreviewDialog({
                 <TableRow key={`invalid-${idx}`} className="bg-red-50">
                   <TableCell className="text-muted-foreground">{row.rowIndex}</TableCell>
                   <TableCell>{row.row.email || "-"}</TableCell>
-                  <TableCell>{row.row.name || "-"}</TableCell>
+                  <TableCell>
+                    {row.row.fullName || "-"}
+                    {row.row.shortName && (
+                      <div className="text-xs text-muted-foreground">Panggilan: {row.row.shortName}</div>
+                    )}
+                  </TableCell>
                   <TableCell>
                     {row.row.role ? <Badge variant="outline">{row.row.role}</Badge> : "-"}
                   </TableCell>

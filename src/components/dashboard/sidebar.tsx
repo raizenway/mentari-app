@@ -20,6 +20,8 @@ interface SidebarProps {
   user: {
     id: string;
     name: string;
+    shortName?: string | null;
+    fullName?: string | null;
     role: UserRole;
   };
 }
@@ -123,11 +125,11 @@ export default function Sidebar({ user }: SidebarProps) {
           <div className="border-t border-white/20 pt-4">
             <div className="flex items-center gap-3">
               <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white/20 text-white font-medium">
-                {user.name.charAt(0).toUpperCase()}
+                {(user.shortName || user.name || "").charAt(0).toUpperCase()}
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-white truncate">
-                  {user.name}
+                  {user.shortName || user.name}
                 </p>
                 <p className="text-xs text-white/70 capitalize">
                   {user.role.toLowerCase()}
