@@ -28,10 +28,14 @@ __turbopack_context__.s([
     "prisma",
     ()=>prisma
 ]);
-var __TURBOPACK__imported__module__$5b$externals$5d2f40$prisma$2f$client__$5b$external$5d$__$2840$prisma$2f$client$2c$__cjs$2c$__$5b$project$5d2f$node_modules$2f40$prisma$2f$client$29$__ = __turbopack_context__.i("[externals]/@prisma/client [external] (@prisma/client, cjs, [project]/node_modules/@prisma/client)");
+(()=>{
+    const e = new Error("Cannot find module '@prisma/client'");
+    e.code = 'MODULE_NOT_FOUND';
+    throw e;
+})();
 ;
 const globalForPrisma = globalThis;
-const prisma = globalForPrisma.prisma ?? new __TURBOPACK__imported__module__$5b$externals$5d2f40$prisma$2f$client__$5b$external$5d$__$2840$prisma$2f$client$2c$__cjs$2c$__$5b$project$5d2f$node_modules$2f40$prisma$2f$client$29$__["PrismaClient"]({
+const prisma = globalForPrisma.prisma ?? new PrismaClient({
     log: ("TURBOPACK compile-time truthy", 1) ? [
         "query",
         "error",
@@ -64,6 +68,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__
 ;
 ;
 const { handlers, signIn, signOut, auth } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$index$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$locals$3e$__["default"])({
+    trustHost: true,
     providers: [
         (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$auth$2f$core$2f$providers$2f$credentials$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"])({
             name: "credentials",
@@ -107,6 +112,7 @@ const { handlers, signIn, signOut, auth } = (0, __TURBOPACK__imported__module__$
                     domicile: user.domicile,
                     ages: user.ages,
                     asalSekolah: user.asalSekolah,
+                    phone: user.phone,
                     role: user.role,
                     image: user.profileImage,
                     isActive: user.isActive
@@ -127,6 +133,7 @@ const { handlers, signIn, signOut, auth } = (0, __TURBOPACK__imported__module__$
                 token.domicile = user.domicile;
                 token.ages = user.ages;
                 token.asalSekolah = user.asalSekolah;
+                token.phone = user.phone;
             }
             return token;
         },
@@ -142,6 +149,7 @@ const { handlers, signIn, signOut, auth } = (0, __TURBOPACK__imported__module__$
                 session.user.domicile = token.domicile;
                 session.user.ages = token.ages;
                 session.user.asalSekolah = token.asalSekolah;
+                session.user.phone = token.phone;
             }
             return session;
         }

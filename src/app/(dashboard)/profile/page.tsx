@@ -258,7 +258,6 @@ export default function ProfilePage() {
           </>
         ) : (
           <p className="font-medium text-hitam truncate">
-            {value || "-"}
             {value === "" || value === undefined || value === null ? (
               <span className="text-gray-400">Belum diisi</span>
             ) : (

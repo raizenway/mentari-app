@@ -14,7 +14,8 @@
 /coverage
 
 # next.js
-# /.next/
+/.next/dev/  # Exclude development files
+# /.next/    # Commented to allow production builds
 /out/
 
 # production

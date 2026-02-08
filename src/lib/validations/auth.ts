@@ -51,7 +51,7 @@ export const updateProfileSchema = z.object({
   class: z.string().max(30, "Kelas maksimal 30 karakter").optional(),
   gender: z.enum(["LAKI_LAKI", "PEREMPUAN"]).optional(),
   domicile: z.string().max(50, "Domisili maksimal 50 karakter").optional(),
-  ages: z.number().int().positive("Umur harus berupa angka positif").optional().nullable(),
+  ages: z.number().int().positive("Umur harus berupa angka positif").optional(),
   phone: z.string().optional(),
 });
 

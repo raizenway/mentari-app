@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
 import {
@@ -13,7 +14,6 @@ import {
   FileText,
   Video,
   Users,
-  Sun,
   ChevronDown,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -66,7 +66,7 @@ const navigation = [
   },
   {
     name: "Profil",
-    href: "/profil",
+    href: "/profile",
     icon: User,
     roles: ["SISWA", "PENGAJAR", "ADMIN"],
   },
@@ -136,7 +136,7 @@ export default function Header({ user }: HeaderProps) {
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
-                  <Link href="/profil" className="cursor-pointer text-hitam">
+                  <Link href="/profile" className="cursor-pointer text-hitam">
                     <User className="mr-2 h-4 w-4 text-hitam" />
                     Profil Saya
                   </Link>
@@ -172,8 +172,8 @@ export default function Header({ user }: HeaderProps) {
         <div className="fixed inset-y-0 left-0 flex w-full max-w-xs flex-col bg-gradient-to-b from-amber-500 to-orange-500">
           <div className="flex h-16 shrink-0 items-center justify-between px-6">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20">
-                <Sun className="h-6 w-6 text-white" />
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20 overflow-hidden">
+                <Image src="/logo-mentari.png" alt="Mentari" width={40} height={40} className="object-cover" />
               </div>
               <div>
                 <span className="text-xl font-bold text-white">MENTARI</span>
