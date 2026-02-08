@@ -90,22 +90,22 @@ export default function PDFViewer({ fileUrl }: PDFViewerProps) {
       <div className="flex items-center justify-between p-3 border-b bg-gray-50">
         <div className="flex items-center gap-2">
           <Button variant="outline" size="sm" onClick={goToPrevPage} disabled={pageNumber <= 1}>
-            <ChevronLeft className="h-4 w-4" />
+            <ChevronLeft className="h-4 w-4 text-black" />
           </Button>
           <div className="text-sm text-muted-foreground">
             Halaman {pageNumber}{numPages ? ` / ${numPages}` : ""}
           </div>
           <Button variant="outline" size="sm" onClick={goToNextPage} disabled={numPages !== null && pageNumber >= numPages}>
-            <ChevronRight className="h-4 w-4" />
+            <ChevronRight className="h-4 w-4 text-black" />
           </Button>
         </div>
         <div className="flex items-center gap-2">
           <Button variant="outline" size="sm" onClick={zoomOut}>
-            <ZoomOut className="h-4 w-4" />
+            <ZoomOut className="h-4 w-4 text-black" />
           </Button>
           <span className="text-sm text-muted-foreground w-12 text-center">{Math.round(scale * 100)}%</span>
           <Button variant="outline" size="sm" onClick={zoomIn}>
-            <ZoomIn className="h-4 w-4" />
+            <ZoomIn className="h-4 w-4 text-black2" />
           </Button>
         </div>
       </div>
@@ -130,23 +130,25 @@ export default function PDFViewer({ fileUrl }: PDFViewerProps) {
           </div>
         )}
 
-        <div className="w-full flex justify-center p-6 bg-white overflow-auto">
-          {fileObject && (
-            <Document
-              file={fileObject}
-              onLoadSuccess={onDocumentLoadSuccess}
-              onLoadError={onDocumentLoadError}
-              loading={null}
-            >
-              <Page
-                pageNumber={pageNumber}
-                scale={scale}
-                width={800}
-                renderTextLayer={true}
-                renderAnnotationLayer={true}
-              />
-            </Document>
-          )}
+        <div className="w-full flex justify-center p-2 sm:p-4 md:p-6 bg-white overflow-auto">
+          <div className="w-full max-w-4xl">
+            {fileObject && (
+              <Document
+                file={fileObject}
+                onLoadSuccess={onDocumentLoadSuccess}
+                onLoadError={onDocumentLoadError}
+                loading={null}
+              >
+                <Page
+                  pageNumber={pageNumber}
+                  scale={scale}
+                  className="w-full"
+                  renderTextLayer={true}
+                  renderAnnotationLayer={true}
+                />
+              </Document>
+            )}
+          </div>
         </div>
       </div>
     </div>
